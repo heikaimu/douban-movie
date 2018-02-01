@@ -1,0 +1,39 @@
+$red: #fa5c4f;
+$blue: #21c5e6;
+$white: #fff;
+.web-header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background: $red;
+
+  .logo{
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 24px;
+    color: $white;
+  }
+
+  .user-center{
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .ant-dropdown-link{
+      height: 60px;
+      margin: 0 25px;
+      display: flex;
+      align-items: center;
+    }
+    .name{
+      padding-right: 5px;
+    }
+    p{
+      color: $white;
+    }
+  }
+}

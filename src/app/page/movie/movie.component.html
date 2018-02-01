@@ -1,0 +1,78 @@
+<div class="search-wrapper pb20">
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="_submitForm()">
+        <div nz-form-item>
+          <div nz-form-control>
+            <nz-input formControlName="keyword" [nzType]="'keyword'" [nzPlaceHolder]="'电影名/导演名'" [nzSize]="'large'">
+              <ng-template #prefix>
+                <i class="anticon anticon-search"></i>
+              </ng-template>
+            </nz-input>
+          </div>
+        </div>
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!validateForm.valid">搜索</button>
+      </form>
+    </div>
+    <div nz-col [nzSpan]="12" class="tr">
+      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="changeStyle(true)"><i class="anticon anticon-bars"></i></button>
+      <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="changeStyle(false)"><i class="anticon anticon-appstore"></i></button>
+    </div>
+  </div>
+</div>
+
+<div class="web-table" *ngIf="listStyle">
+  <nz-table #nzTable
+            nzIsPagination="false"
+            [nzAjaxData]="_dataSet"
+            [nzLoading]="_loading"
+  >
+    <thead nz-thead>
+    <tr>
+      <th nz-th><span>上映时间</span></th>
+      <th nz-th><span>电影名</span></th>
+      <th nz-th><span>类型</span></th>
+      <th nz-th><span>导演</span></th>
+      <th nz-th><span>主演</span></th>
+      <th nz-th><span>豆瓣评分</span></th>
+      <th nz-th><span>推荐度</span></th>
+      <!--<th nz-th><span>操作</span></th>-->
+    </tr>
+    </thead>
+    <tbody nz-tbody>
+    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+      <td nz-td>{{data.year}}</td>
+      <td nz-td>
+        <a [routerLink]="['/main/movieIntroduce', data.id]">{{data.title}}</a>
+      </td>
+      <td nz-td><span *ngFor="let i of data.genres">{{i}}<span nz-table-divider></span></span></td>
+      <td nz-td><a *ngFor="let i of data.directors">{{i.name}}<span nz-table-divider></span></a></td>
+      <td nz-td><a *ngFor="let i of data.casts">{{i.name}}<span nz-table-divider></span></a></td>
+      <td nz-td>{{data.rating.average}}</td>
+      <td nz-td><nz-rate [ngModel]="data.rating.stars/10" nzDisabled></nz-rate></td>
+      <!--<td nz-td>-->
+        <!--<nz-popconfirm [nzTitle]="'确定要删除这个任务吗？'" (nzOnConfirm)="confirm(data)">-->
+          <!--<a nz-popconfirm>删除</a>-->
+        <!--</nz-popconfirm>-->
+      <!--</td>-->
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-spin [nzSpinning]="_loading">
+<div class="card-wrapper" *ngIf="!listStyle">
+    <app-card-list [cardData]="cardData" *ngIf="cardData"></app-card-list>
+</div>
+</nz-spin>
+
+<div class="page-wrapper">
+  <nz-pagination
+    nzShowSizeChanger
+    [nzTotal]="_total"
+    [(nzPageIndex)]="_current"
+    (nzPageIndexChange)="refreshData()"
+    [(nzPageSize)]="_pageSize"
+    (nzPageSizeChange)="refreshData(true)"
+  ></nz-pagination>
+</div>

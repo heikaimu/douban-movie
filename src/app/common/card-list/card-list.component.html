@@ -1,0 +1,17 @@
+<ul class="card-wrapper">
+  <li *ngFor="let i of cardData">
+    <a routerLink="{{i.url}}">
+      <nz-card style="width:180px">
+        <ng-template #body>
+          <div class="custom-image">
+            <img alt="example" width="100%" src="{{i.avatar}}" referrerpolicy ="never"/>
+          </div>
+          <div class="custom-card">
+            <h3>{{i.title}}</h3>
+            <p *ngIf="i.average">豆瓣评分：{{i.average}}</p>
+          </div>
+        </ng-template>
+      </nz-card>
+    </a>
+  </li>
+</ul>

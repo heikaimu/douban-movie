@@ -1,0 +1,41 @@
+<div *ngIf="movieDetails">
+  <div class="details-left">
+    <div class="movie-basic-ifo">
+      <nz-card style="width:780px;">
+        <ng-template #title>
+          {{movieDetails.title}}
+        </ng-template>
+        <ng-template #body>
+          <p class="text-item">中文名：{{movieDetails.title}}</p>
+          <p class="text-item">外文名：{{movieDetails.original_title}}</p>
+          <p class="text-item">其他译名：<span *ngFor="let item of movieDetails.aka; let i = index">{{item}} <i *ngIf="i!=movieDetails.aka.length-1">、</i></span></p>
+          <p class="text-item">拍摄地点：<span *ngFor="let item of movieDetails.countries; let i = index">{{item}} <i *ngIf="i!=movieDetails.countries.length-1">、</i></span></p>
+          <p class="text-item">类型：<span *ngFor="let item of movieDetails.genres; let i = index">{{item}} <i *ngIf="i!=movieDetails.genres.length-1">、</i></span></p>
+          <p class="text-item">上映时间：{{movieDetails.year}}</p>
+          <p class="text-item">导演：<span *ngFor="let item of movieDetails.directors; let i = index">{{item.name}} <i *ngIf="i!=movieDetails.directors.length-1">、</i></span></p>
+          <p class="text-item">收藏人数：{{movieDetails.collect_count}}</p>
+        </ng-template>
+      </nz-card>
+    </div>
+    <div class="movie-details-wrapper">
+      <nz-card style="width:780px;">
+        <ng-template #title>
+          电影简介
+        </ng-template>
+        <ng-template #body>
+          {{movieDetails.summary}}
+        </ng-template>
+      </nz-card>
+    </div>
+    <div class="cast-wrapper">
+      <app-card-list [cardData]="cardData" *ngIf="cardData"></app-card-list>
+    </div>
+  </div>
+
+  <div class="details-right">
+    <div class="movie-cover" *ngIf="movieDetails.images">
+      <img src="{{movieDetails.images.large}}" alt="" referrerpolicy ="never">
+    </div>
+  </div>
+</div>
+

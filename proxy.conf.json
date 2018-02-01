@@ -1,0 +1,7 @@
+{
+  "/v2": {
+    "target": "http://api.douban.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

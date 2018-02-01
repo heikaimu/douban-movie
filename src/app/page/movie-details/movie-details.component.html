@@ -1,0 +1,62 @@
+<div class="form-wrapper">
+<form nz-form [nzType]="'horizontal'" [formGroup]="validateForm">
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="2">
+      <label nz-form-item-required>标题</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="18">
+      <nz-input [nzSize]="'large'" formControlName="title"></nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="2">
+      <label>英文标题</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="18">
+      <nz-input [nzSize]="'large'" formControlName="original_title"></nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="2">
+      <label nz-form-item-required>分类</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="18">
+      <nz-select formControlName="subtype" [nzSize]="'large'">
+        <nz-option [nzLabel]="'电影'" [nzValue]="'movie'"></nz-option>
+        <nz-option [nzLabel]="'音乐'" [nzValue]="'music'"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="2">
+      <label nz-form-item-required>类型</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="18">
+      <nz-select formControlName="genres" [nzSize]="'large'" [nzMode]="'multiple'">
+        <nz-option *ngFor="let i of movieType" [nzLabel]="i" [nzValue]="i"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="2">
+      <label>Switch</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="18">
+      <nz-switch formControlName="switch"></nz-switch>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="2">
+      <label nz-form-item-required>简介</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="18">
+      <nz-input [nzSize]="'large'" formControlName="summary" [nzType]="'textarea'" [nzRows]="'8'"></nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-control nz-col [nzSpan]="12" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" [nzSize]="'large'">Submit</button>
+    </div>
+  </div>
+</form>
+</div>

@@ -1,0 +1,30 @@
+:host ::ng-deep .custom-image {
+  height: 0;
+  padding-bottom: 130%;
+  overflow: hidden;
+}
+
+:host ::ng-deep .custom-image img {
+  width: 100%;
+  display: block;
+}
+
+:host ::ng-deep .custom-card {
+  padding: 10px 16px;
+}
+
+:host ::ng-deep .custom-card p {
+  color: #999;
+}
+
+:host ::ng-deep .ant-card-body {
+  padding: 0;
+}
+.card-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+
+  li{
+    margin: 0 20px 20px 0;
+  }
+}

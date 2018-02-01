@@ -1,0 +1,28 @@
+<div *ngIf="castDetails">
+  <div class="details-left">
+    <div class="cast-basic-ifo">
+      <nz-card style="width:780px;">
+        <ng-template #title>
+          {{castDetails.name}}
+        </ng-template>
+        <ng-template #body>
+          <p class="text-item">中文名：{{castDetails.name}}</p>
+          <p class="text-item">英文名：{{castDetails.name_en}}</p>
+          <p class="text-item">性别：{{castDetails.gender}}</p>
+          <p class="text-item">出生地：{{castDetails.born_place}}</p>
+          <p class="text-item" *ngIf="castDetails.aka.length!=0;">昵称：<span *ngFor="let item of castDetails.aka; let i = index">{{item}} <i *ngIf="i!=castDetails.aka.length-1">、</i></span></p>
+          <p class="text-item" *ngIf="castDetails.aka_en.length!=0;">昵称：<span *ngFor="let item of castDetails.aka_en; let i = index">{{item}} <i *ngIf="i!=castDetails.aka_en.length-1">、</i></span></p>
+        </ng-template>
+      </nz-card>
+    </div>
+    <div class="works-wrapper">
+      <app-card-list [cardData]="cardData" *ngIf="cardData"></app-card-list>
+    </div>
+  </div>
+
+  <div class="details-right">
+    <div class="movie-cover" *ngIf="castDetails.avatars">
+      <img src="{{castDetails.avatars.large}}" alt="" referrerpolicy ="never">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.details-left{
+  float: left;
+
+  .cast-wrapper{
+    margin-top: 20px;
+  }
+  .movie-basic-ifo{
+    margin-bottom: 20px;
+
+    .text-item{
+      width: 50%;
+      padding: 5px 10px 5px 0;
+      float: left;
+    }
+  }
+
+  .cast-wrapper{
+    width: 800px;
+  }
+}
+.details-right{
+  float: left;
+}
