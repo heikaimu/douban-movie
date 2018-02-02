@@ -46,8 +46,8 @@
         <a [routerLink]="['/main/movieIntroduce', data.id]">{{data.title}}</a>
       </td>
       <td nz-td><span *ngFor="let i of data.genres">{{i}}<span nz-table-divider></span></span></td>
-      <td nz-td><a *ngFor="let i of data.directors">{{i.name}}<span nz-table-divider></span></a></td>
-      <td nz-td><a *ngFor="let i of data.casts">{{i.name}}<span nz-table-divider></span></a></td>
+      <td nz-td><a [routerLink]="['/main/castIntroduce', i.id]" *ngFor="let i of data.directors">{{i.name}}<span nz-table-divider></span></a></td>
+      <td nz-td><a [routerLink]="['/main/castIntroduce', i.id]" *ngFor="let i of data.casts">{{i.name}}<span nz-table-divider></span></a></td>
       <td nz-td>{{data.rating.average}}</td>
       <td nz-td><nz-rate [ngModel]="data.rating.stars/10" nzDisabled></nz-rate></td>
       <!--<td nz-td>-->

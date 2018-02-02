@@ -12,7 +12,6 @@ export class CardListComponent implements OnInit {
 
   @Input()
   set cardData (obj: any) {
-    console.log(obj);
     if (obj.type === 'movie') {
       this.cardList = obj.list.map(function(item) {
         return {

@@ -32,7 +32,6 @@ export class MovieDetailsComponent implements OnInit {
       switch         : [ false ],
       summary        : [ this.movieDetails.summary ]
     });
-    console.log(this.movieDetails);
   }
   ngOnInit() {
     // 由于已经被创建，，不会被再次创建，OnInit里面的值保留第一次被创建的值，解决办法参数订阅

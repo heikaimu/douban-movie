@@ -105,7 +105,6 @@ export class TableComponent implements OnInit, OnDestroy {
   }
   // 删除列表
   confirm = (data) => {
-    console.log(data);
   }
   ngOnInit() {
     this.validateForm = this.fb.group({
