@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import {HashLocationStrategy , LocationStrategy} from '@angular/common';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './routes';
@@ -48,7 +49,8 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
   providers: [
     HTTP,
     Storage,
-    Scroll
+    Scroll,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
