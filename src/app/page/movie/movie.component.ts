@@ -35,22 +35,22 @@ export class TableComponent implements OnInit, OnDestroy {
   // 刷新数据
   refreshData(reset = false) {
     if (reset) {
-      // this._current = 1;
+      this._current = 1;
       // this._pageSize = 10;
       // this._total = 1;
       // this.listStyle = true;
-      const moviePageIfo = this.storage.get('movie-page-ifo');
-      if (moviePageIfo.type && moviePageIfo.type === this._type) {
-        this._current = moviePageIfo.pageId;
-        this._pageSize = moviePageIfo.pageSize;
-        this._total = moviePageIfo.total;
-        this.listStyle = moviePageIfo.listStyle;
-      } else {
-        this._current = 1;
-        this._pageSize = 10;
-        this._total = 1;
-        this.listStyle = true;
-      }
+      // const moviePageIfo = this.storage.get('movie-page-ifo');
+      // if (moviePageIfo.type && moviePageIfo.type === this._type) {
+      //   this._current = moviePageIfo.pageId;
+      //   this._pageSize = moviePageIfo.pageSize;
+      //   this._total = moviePageIfo.total;
+      //   this.listStyle = moviePageIfo.listStyle;
+      // } else {
+      //   this._current = 1;
+      //   this._pageSize = 10;
+      //   this._total = 1;
+      //   this.listStyle = true;
+      // }
     }
     if (this._isSearch) {
       this.searchData();
