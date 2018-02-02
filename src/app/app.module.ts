@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './routes';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '../server/httpServer';
 import { Storage } from '../server/storage';
@@ -47,7 +46,6 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
     NgZorroAntdModule.forRoot()
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     HTTP,
     Storage,
     Scroll
