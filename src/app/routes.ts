@@ -6,11 +6,12 @@ import { TableComponent } from './page/movie/movie.component';
 import { MovieDetailsComponent } from './page/movie-details/movie-details.component';
 import { MovieIntroduceComponent } from './page/movie-introduce/movie-introduce.component';
 import { CastIntroduceComponent } from './page/cast-introduce/cast-introduce.component';
+import { WelcomeComponent } from './page/welcome/welcome.component';
 
 const ROUTES: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: WelcomeComponent
   },
   {
     path: 'main',

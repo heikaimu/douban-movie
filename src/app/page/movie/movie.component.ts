@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../../../api/movie';
+import { Storage } from '../../../server/storage';
 import {
   FormBuilder,
   FormGroup,
@@ -13,7 +14,7 @@ import {
   templateUrl: './movie.component.html',
   styleUrls: ['./movie.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
   validateForm: FormGroup;
   listData: any;
   _isSearch = false;
@@ -24,16 +25,28 @@ export class TableComponent implements OnInit {
   _dataSet = [];
   _loading = true;
   cardData: object;
-  listStyle = false;
+  listStyle = true;
   constructor(
     private movie: Movie,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: Storage
   ) { }
   // 刷新数据
   refreshData(reset = false) {
     if (reset) {
-      this._current = 1;
+      const moviePageIfo = this.storage.get('movie-page-ifo');
+      if (moviePageIfo.type && moviePageIfo.type === this._type) {
+        this._current = moviePageIfo.pageId;
+        this._pageSize = moviePageIfo.pageSize;
+        this._total = moviePageIfo.total;
+        this.listStyle = moviePageIfo.listStyle;
+      } else {
+        this._current = 1;
+        this._pageSize = 10;
+        this._total = 1;
+        this.listStyle = true;
+      }
     }
     if (this._isSearch) {
       this.searchData();
@@ -75,15 +88,6 @@ export class TableComponent implements OnInit {
       list: this.listData.subjects
     };
   }
-  ngOnInit() {
-    this.validateForm = this.fb.group({
-      keyword: [ null, [ Validators.required ] ]
-    });
-    this.route.params.subscribe((data) => {
-      this._type = data.type;
-      this.refreshData(true);
-    });
-  }
   // 搜索按钮
   _submitForm() {
     for (const i in this.validateForm.controls) {
@@ -102,6 +106,25 @@ export class TableComponent implements OnInit {
   // 删除列表
   confirm = (data) => {
     console.log(data);
+  }
+  ngOnInit() {
+    this.validateForm = this.fb.group({
+      keyword: [ null, [ Validators.required ] ]
+    });
+    this.route.params.subscribe((data) => {
+      this._type = data.type;
+      this.refreshData(true);
+    });
+  }
+  ngOnDestroy() {
+    const moviePageIfo = {
+      type: this._type,
+      pageId: this._current,
+      pageSize: this._pageSize,
+      total: this._total,
+      listStyle: this.listStyle
+    };
+    this.storage.set('movie-page-ifo', moviePageIfo);
   }
 
 }

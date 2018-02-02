@@ -60,9 +60,9 @@
   </nz-table>
 </div>
 
-<nz-spin [nzSpinning]="_loading">
-<div class="card-wrapper" *ngIf="!listStyle">
-    <app-card-list [cardData]="cardData" *ngIf="cardData"></app-card-list>
+<nz-spin [nzSpinning]="_loading" *ngIf="cardData && !listStyle">
+<div class="card-wrapper">
+    <app-card-list [cardData]="cardData"></app-card-list>
 </div>
 </nz-spin>
 

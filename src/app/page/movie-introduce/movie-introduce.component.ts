@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Movie } from '../../../api/movie';
 
 @Component({
@@ -14,7 +15,8 @@ export class MovieIntroduceComponent implements OnInit {
   id: number;
   constructor(
     private movie: Movie,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
   async getDetails() {
     this.movieDetails = await this.movie.getDetails(this.id);
@@ -31,5 +33,8 @@ export class MovieIntroduceComponent implements OnInit {
       this.getDetails();
     });
   }
-
+  // 返回上一页
+  back() {
+    this.location.back();
+  }
 }

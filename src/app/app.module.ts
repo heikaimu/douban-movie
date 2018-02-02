@@ -20,6 +20,7 @@ import { MovieDetailsComponent } from './page/movie-details/movie-details.compon
 import { MovieIntroduceComponent } from './page/movie-introduce/movie-introduce.component';
 import { CardListComponent } from './common/card-list/card-list.component';
 import { CastIntroduceComponent } from './page/cast-introduce/cast-introduce.component';
+import { WelcomeComponent } from './page/welcome/welcome.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CastIntroduceComponent } from './page/cast-introduce/cast-introduce.com
     MovieDetailsComponent,
     MovieIntroduceComponent,
     CardListComponent,
-    CastIntroduceComponent
+    CastIntroduceComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,13 @@
 <div class="slide-nav">
   <div  style="width: 200px;">
     <ul nz-menu [nzMode]="'inline'" nzTheme='dark'>
-      <li nz-submenu nzOpen>
+      <li nz-submenu nzOpen="{{first.open}}" *ngFor="let first of webNav">
           <span title>
             <i class="anticon anticon-video-camera"></i>
-            <span>电影</span>
+            <span>{{first.title}}</span>
           </span>
         <ul>
-          <li nz-menu-item nzSelected="true"><a routerLink="{{['movie/in_theaters']}}">影院热映</a></li>
-          <li nz-menu-item><a routerLink="{{['movie/coming_soon']}}">即将上映</a></li>
-          <li nz-menu-item><a routerLink="{{['movie/top250']}}">TOP250</a></li>
+          <li nz-menu-item nzSelected="{{secound.open}}" *ngFor="let secound of first.children"><a (click)="goTo(secound.path)">{{secound.title}}</a></li>
         </ul>
       </li>
     </ul>
