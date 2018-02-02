@@ -1,7 +1,7 @@
 <div class="search-wrapper pb20">
   <div nz-row>
     <div nz-col [nzSpan]="12">
-      <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="_submitForm()">
+      <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="handleSearch()">
         <div nz-form-item>
           <div nz-form-control>
             <nz-input formControlName="keyword" [nzType]="'keyword'" [nzPlaceHolder]="'电影名/导演名'" [nzSize]="'large'">

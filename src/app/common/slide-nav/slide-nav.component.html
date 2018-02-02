@@ -7,7 +7,7 @@
             <span>{{first.title}}</span>
           </span>
         <ul>
-          <li nz-menu-item nzSelected="{{secound.open}}" *ngFor="let secound of first.children"><a (click)="goTo(secound.path)">{{secound.title}}</a></li>
+          <li nz-menu-item nzSelected="{{secound.value===currentNav}}" *ngFor="let secound of first.children"><a (click)="goTo(secound)">{{secound.title}}</a></li>
         </ul>
       </li>
     </ul>

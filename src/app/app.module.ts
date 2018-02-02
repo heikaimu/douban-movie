@@ -9,8 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '../server/httpServer';
 import { Storage } from '../server/storage';
 import { Scroll } from '../server/scroll';
-import { MainComponent } from './common/main/main.component';
+import { Store } from '../server/store';
 
+import { MainComponent } from './common/main/main.component';
 import { AppComponent } from './app.component';
 import { WebHeaderComponent } from './common/web-header/web-header.component';
 import { SlideNavComponent } from './common/slide-nav/slide-nav.component';
@@ -50,6 +51,7 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
     HTTP,
     Storage,
     Scroll,
+    Store,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

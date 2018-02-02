@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../../../api/movie';
 import { Storage } from '../../../server/storage';
+import { Store } from '../../../server/store';
 import {
   FormBuilder,
   FormGroup,
@@ -30,31 +31,18 @@ export class TableComponent implements OnInit, OnDestroy {
     private movie: Movie,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private storage: Storage
+    private storage: Storage,
+    private router: Router,
+    private store: Store
   ) { }
   // 刷新数据
   refreshData(reset = false) {
-    if (reset) {
+    if (reset) {// 强刷
       this._current = 1;
-      // this._pageSize = 10;
-      // this._total = 1;
-      // this.listStyle = true;
-      // const moviePageIfo = this.storage.get('movie-page-ifo');
-      // if (moviePageIfo.type && moviePageIfo.type === this._type) {
-      //   this._current = moviePageIfo.pageId;
-      //   this._pageSize = moviePageIfo.pageSize;
-      //   this._total = moviePageIfo.total;
-      //   this.listStyle = moviePageIfo.listStyle;
-      // } else {
-      //   this._current = 1;
-      //   this._pageSize = 10;
-      //   this._total = 1;
-      //   this.listStyle = true;
-      // }
     }
-    if (this._isSearch) {
+    if (this._isSearch) { // 如果当前是搜索模式
       this.searchData();
-    } else {
+    } else { // 正常分类模式
       this.getTypeData();
     }
   }
@@ -93,30 +81,63 @@ export class TableComponent implements OnInit, OnDestroy {
     };
   }
   // 搜索按钮
-  _submitForm() {
+  handleSearch() {
+    this.storage.set('current-nav', 'search');
+    this._isSearch = true;
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[ i ].markAsDirty();
     }
     if (this.validateForm.valid) {
-      this._isSearch = true;
-      this.refreshData(true);
+      if (this._type === 'search') { // 如果当前是在搜索页面下，点击搜索直接搜索
+        this.refreshData(true);
+      } else { // 如果不是在搜索页面下，点击则先跳转到搜索页面然后走一遍生命周期
+        this.router.navigate(['/main/movie/search']);
+      }
     }
   }
   // 改变样式
   changeStyle(b) {
     this.listStyle = b;
   }
-  // 删除列表
-  confirm = (data) => {
-  }
   ngOnInit() {
+    // 初始的时候搜索为false，搜索内容为null
     this.validateForm = this.fb.group({
       keyword: [ null, [ Validators.required ] ]
     });
+    // 根据路由的type参数判断
     this.route.params.subscribe((data) => {
       this._isSearch = false;
+      this.validateForm = this.fb.group({
+        keyword: [ null, [ Validators.required ] ]
+      });
+      // 首先获取页面的type
       this._type = data.type;
-      this.refreshData(true);
+      // 获取本地缓存数据
+      const moviePageIfo = this.storage.get('movie-page-ifo');
+      if (moviePageIfo.type && moviePageIfo.type === this._type) { // 如果当前类别符合storage里面的类别
+        this._current = moviePageIfo.pageId;
+        this._pageSize = moviePageIfo.pageSize;
+        this._total = moviePageIfo.total;
+        this.listStyle = moviePageIfo.listStyle;
+        if (this._type === 'search') { // 如果是搜索页面
+          this._isSearch = true;
+          const currentKeyword = typeof(moviePageIfo.keyword) !== 'undefined' ? moviePageIfo.keyword : '';
+          this.validateForm = this.fb.group({
+            keyword: [ currentKeyword, [ Validators.required ] ]
+          });
+        } else { // 分类页面
+          this._isSearch = false;
+          this.validateForm = this.fb.group({
+            keyword: [ null, [ Validators.required ] ]
+          });
+        }
+      } else { // 进的新页面则全部重置
+        this._current = 1;
+        this._pageSize = 10;
+        this._total = 10;
+        this.listStyle = true;
+      }
+      this.refreshData();
     });
   }
   ngOnDestroy() {
@@ -125,7 +146,8 @@ export class TableComponent implements OnInit, OnDestroy {
       pageId: this._current,
       pageSize: this._pageSize,
       total: this._total,
-      listStyle: this.listStyle
+      listStyle: this.listStyle,
+      keyword: this.validateForm.value.keyword
     };
     this.storage.set('movie-page-ifo', moviePageIfo);
   }
