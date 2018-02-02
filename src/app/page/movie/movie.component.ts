@@ -35,6 +35,10 @@ export class TableComponent implements OnInit, OnDestroy {
   // 刷新数据
   refreshData(reset = false) {
     if (reset) {
+      // this._current = 1;
+      // this._pageSize = 10;
+      // this._total = 1;
+      // this.listStyle = true;
       const moviePageIfo = this.storage.get('movie-page-ifo');
       if (moviePageIfo.type && moviePageIfo.type === this._type) {
         this._current = moviePageIfo.pageId;
@@ -94,7 +98,6 @@ export class TableComponent implements OnInit, OnDestroy {
       this.validateForm.controls[ i ].markAsDirty();
     }
     if (this.validateForm.valid) {
-      this._isSearch = false;
       this._isSearch = true;
       this.refreshData(true);
     }
@@ -111,6 +114,7 @@ export class TableComponent implements OnInit, OnDestroy {
       keyword: [ null, [ Validators.required ] ]
     });
     this.route.params.subscribe((data) => {
+      this._isSearch = false;
       this._type = data.type;
       this.refreshData(true);
     });
