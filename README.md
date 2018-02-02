@@ -26,3 +26,7 @@ npm install node-sass --save-dev
 "defaults": {
      "styleExt": "scss",
 }
+
+# 安装 ng-zorro
+
+npm install ng-zorro-antd --save
