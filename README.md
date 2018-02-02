@@ -1,3 +1,7 @@
+# 项目预览
+
+https://heikaimu.github.io/douban-movie/dist
+
 # 安装基础项目
 
 ## 安装angular-cli:
@@ -21,7 +25,7 @@ npm i --save-dev @angular-devkit/core
 ```
 现在运行ng serve 或者 npm start成功启动项目
 
-# 安装scss
+## 安装scss
 ```
 npm install node-sass --save-dev
 ```
@@ -30,13 +34,13 @@ npm install node-sass --save-dev
      "styleExt": "scss",
 }
 
-# 安装 ng-zorro
+## 安装 ng-zorro
 
 npm install ng-zorro-antd --save，然后在app.module.ts里引入
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 imports: [ NgZorroAntdModule.forRoot() ]
 
-# 安装jquery
+## 安装jquery
 
 之所以用到jquery是因为httpClient的jsonp豆瓣api不支持没想到别的办法，在本地测试的时候可以通过配置代理来解决
 
