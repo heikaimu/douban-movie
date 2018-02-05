@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '../../../server/storage';
 import { Store } from '../../../server/store';
+import { Stars } from '../../../server/commonService';
 
 @Component({
   selector: 'app-slide-nav',
@@ -40,12 +41,14 @@ export class SlideNavComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private storage: Storage,
-    private store: Store
+    private store: Store,
+    private stars: Stars
   ) { }
   ngOnInit() {
     // 订阅模式
     this.store.currentNav.subscribe((data) => {
       this.currentNav = data;
+      console.log(this.stars.type);
     });
   }
   ngOnChanges() {}

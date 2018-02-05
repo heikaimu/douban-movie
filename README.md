@@ -75,16 +75,120 @@ $('body').addClass('');
 
 修改package.json里面的 "build": "ng build --base-href ./ --prod", base-href根据情况而定。
 
-知识点整理
-====
 # 组件之间通信
 
-# 1. 父传子
+## 1. 父传子
+parent.component.ts
+```
+constructor() {
+  this.list = [1, 2, 3];
+}
+```
+parent.component.html
+```
+<children-component [list]="list"></children-component>
+```
+children.component.ts
+```
+import {Input} from '@angular/core';
+export class children {
+  @Input() list: number[] = [1];
+  @Input('master') masterName: string;//可以将master换成另外一个名字
+}
+```
+如果需要对传入的值做数据处理则如下：
+```
+import {Input} from '@angular/core';
+export class children {
+  newList: number[];
+  @Input()
+  set list(number: number[]) {
+    ....数据处理
+    this.newList = ...
+  }
+  get list(): number[] {
+    return this.newList;
+  }
+}
+```
 
-# 2. 子传父
+## 2. 子传父
+parent.component.ts
+```
+countChange(event: number) {
+    this.changeMsg = `子组件change事件已触发，当前值是: ${event}`;
+  }
+```
+parent.component.html
+```
+<children-component (change)="countChange($event)"></children-component>
+```
+children.component.ts
+```
+import {Output, EventEmitter} from '@angular/core';
+export class children {
+   count: number = 10;
+   @Output() change: EventEmitter<number> = new EventEmitter<number>();
+   this.change.emit(this.count);
+}
+```
 
-# 3. 非父子组件
+## 3. 非父子组件
 
-## 3.1 订阅者发布者模式实现组件传值
+### 3.1 订阅者发布者模式实现组件传值
+新建一个store.ts
+```
+import { Injectable, EventEmitter } from '@angular/core';
 
-## 3.2 公用service实现组件之间传值
+@Injectable()
+export class Store {
+  public currentNav: any;
+  public currentPage: any;
+  constructor() {
+    this.currentNav = new EventEmitter();
+    this.currentPage = new EventEmitter();
+  }
+}
+```
+注入（一定要在单列下才能正常运行）我选择在app.module.ts里面注入
+app.module.ts
+```
+import { Store } from '../server/store';
+@NgModule({
+  providers: [
+    Store
+  ]
+}）
+```
+现在有A、B两个组件需要通信
+
+A.ts
+```
+import { Store } from '../../../server/store';
+export class A {
+  constructor(
+    private store: Store
+  ) {}
+  
+  // 我们设定当前pageId为5
+  this.store.currentNav.emit(5);
+}
+```
+B.ts
+```
+import { Store } from '../../../server/store';
+export class B implements OnInit {
+  constructor(
+    private store: Store
+  ) {}
+  
+  ngOnInit() {
+      // 订阅模式
+      this.store.currentNav.subscribe((data) => {
+        this.currentNav = data;
+      });
+    }
+}
+```
+
+### 3.2 公用service实现组件之间传值

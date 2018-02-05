@@ -10,6 +10,7 @@ import { HTTP } from '../server/httpServer';
 import { Storage } from '../server/storage';
 import { Scroll } from '../server/scroll';
 import { Store } from '../server/store';
+import { Stars } from '../server/commonService';
 
 import { MainComponent } from './common/main/main.component';
 import { AppComponent } from './app.component';
@@ -52,6 +53,7 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
     Storage,
     Scroll,
     Store,
+    Stars,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

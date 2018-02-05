@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../../../api/movie';
 import { Storage } from '../../../server/storage';
 import { Store } from '../../../server/store';
+import { Stars } from '../../../server/commonService';
+
 import {
   FormBuilder,
   FormGroup,
@@ -33,7 +35,8 @@ export class TableComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private storage: Storage,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private stars: Stars
   ) { }
   ngOnInit() {
     // 初始的时候搜索为false，搜索内容为null
@@ -54,6 +57,7 @@ export class TableComponent implements OnInit, OnDestroy {
       }
       // 发布模式（和左侧导航通信）
       this.store.currentNav.emit(this._type);
+      this.stars.type = this._type;
       this.chargePage();
     });
   }
