@@ -35,6 +35,57 @@ export class TableComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store
   ) { }
+  ngOnInit() {
+    // 初始的时候搜索为false，搜索内容为null
+    this.validateForm = this.fb.group({
+      keyword: [ null, [ Validators.required ] ]
+    });
+    // 根据路由的type参数判断
+    this.route.params.subscribe((data) => {
+      // 首先获取页面的type
+      this._type = data.type;
+      if (this._type !== 'search') {
+        this._isSearch = false;
+        this.validateForm = this.fb.group({
+          keyword: [ null, [ Validators.required ] ]
+        });
+      } else {
+        this._isSearch = true;
+      }
+      // 发布模式（和左侧导航通信）
+      this.store.currentNav.emit(this._type);
+      this.chargePage();
+    });
+  }
+  // 判断页面
+  chargePage() {
+    // 获取本地缓存数据
+    const moviePageIfo = this.storage.get('movie-page-ifo');
+    if (moviePageIfo.type && moviePageIfo.type === this._type) { // 如果当前类别符合storage里面的类别
+      this._current = moviePageIfo.pageId;
+      this._pageSize = moviePageIfo.pageSize;
+      this._total = moviePageIfo.total;
+      this.listStyle = moviePageIfo.listStyle;
+      if (this._type === 'search') { // 如果是搜索页面
+        this._isSearch = true;
+        const currentKeyword = typeof(moviePageIfo.keyword) !== 'undefined' ? moviePageIfo.keyword : '';
+        this.validateForm = this.fb.group({
+          keyword: [ currentKeyword, [ Validators.required ] ]
+        });
+      } else { // 分类页面
+        this._isSearch = false;
+        this.validateForm = this.fb.group({
+          keyword: [ null, [ Validators.required ] ]
+        });
+      }
+    } else { // 进的新页面则全部重置
+      this._current = 1;
+      this._pageSize = 10;
+      this._total = 10;
+      this.listStyle = true;
+    }
+    this.refreshData();
+  }
   // 刷新数据
   refreshData(reset = false) {
     if (reset) {// 强刷
@@ -98,47 +149,6 @@ export class TableComponent implements OnInit, OnDestroy {
   // 改变样式
   changeStyle(b) {
     this.listStyle = b;
-  }
-  ngOnInit() {
-    // 初始的时候搜索为false，搜索内容为null
-    this.validateForm = this.fb.group({
-      keyword: [ null, [ Validators.required ] ]
-    });
-    // 根据路由的type参数判断
-    this.route.params.subscribe((data) => {
-      this._isSearch = false;
-      this.validateForm = this.fb.group({
-        keyword: [ null, [ Validators.required ] ]
-      });
-      // 首先获取页面的type
-      this._type = data.type;
-      // 获取本地缓存数据
-      const moviePageIfo = this.storage.get('movie-page-ifo');
-      if (moviePageIfo.type && moviePageIfo.type === this._type) { // 如果当前类别符合storage里面的类别
-        this._current = moviePageIfo.pageId;
-        this._pageSize = moviePageIfo.pageSize;
-        this._total = moviePageIfo.total;
-        this.listStyle = moviePageIfo.listStyle;
-        if (this._type === 'search') { // 如果是搜索页面
-          this._isSearch = true;
-          const currentKeyword = typeof(moviePageIfo.keyword) !== 'undefined' ? moviePageIfo.keyword : '';
-          this.validateForm = this.fb.group({
-            keyword: [ currentKeyword, [ Validators.required ] ]
-          });
-        } else { // 分类页面
-          this._isSearch = false;
-          this.validateForm = this.fb.group({
-            keyword: [ null, [ Validators.required ] ]
-          });
-        }
-      } else { // 进的新页面则全部重置
-        this._current = 1;
-        this._pageSize = 10;
-        this._total = 10;
-        this.listStyle = true;
-      }
-      this.refreshData();
-    });
   }
   ngOnDestroy() {
     const moviePageIfo = {

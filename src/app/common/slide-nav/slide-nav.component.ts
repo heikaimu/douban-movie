@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Storage } from '../../../server/storage';
 import { Store } from '../../../server/store';
 
@@ -40,19 +40,15 @@ export class SlideNavComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private storage: Storage,
-    private route: ActivatedRoute,
     private store: Store
   ) { }
-
   ngOnInit() {
-    this.route.params.subscribe((data) => {
-      this.currentNav = this.storage.get('current-nav');
-      console.log(this.store);
+    // 订阅模式
+    this.store.currentNav.subscribe((data) => {
+      this.currentNav = data;
     });
   }
-  ngOnChanges() {
-    console.log(this.store);
-  }
+  ngOnChanges() {}
   goTo(nav) {
     this.storage.set('current-nav', nav.value);
     this.storage.set('movie-page-ifo', {});
