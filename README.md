@@ -265,13 +265,13 @@ export class  {
 
 # 路由的跳转的几种写法
 
-# 1. a标签上直接写路由地址
+## 1. a标签上直接写路由地址
 
 ```
 <a routerLink="{{'/main/movie/'+id}}"></a>
 <a [routerLink]="['/main/movie', id]"></a>
 ```
-# 2. 函数式写法
+## 2. 函数式写法
 ```
 import { Router } from '@angular/router';
 export class C {
