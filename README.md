@@ -1,4 +1,6 @@
-# 项目预览
+# 学习了两周angular2，还是打算用老朋友豆瓣api来做个demo熟悉下
+
+## 项目预览
 
 https://heikaimu.github.io/douban-movie/dist
 

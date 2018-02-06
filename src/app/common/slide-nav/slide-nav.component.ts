@@ -32,6 +32,17 @@ export class SlideNavComponent implements OnInit, OnChanges {
           value: 'top250'
         }
       ]
+    },
+    {
+      title: '常用插件',
+      open: true,
+      children: [
+        {
+          title: '图片裁剪',
+          path: '/main/imgCrop',
+          value: 'imgCrop'
+        }
+      ]
     }
   ];
   toggleCollapsed() {

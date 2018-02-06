@@ -7,6 +7,7 @@ import { MovieDetailsComponent } from './page/movie-details/movie-details.compon
 import { MovieIntroduceComponent } from './page/movie-introduce/movie-introduce.component';
 import { CastIntroduceComponent } from './page/cast-introduce/cast-introduce.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
+import { ImgCropComponent } from './page/img-crop/img-crop.component';
 
 const ROUTES: Routes = [
   {
@@ -32,6 +33,10 @@ const ROUTES: Routes = [
       {
         path: 'castIntroduce/:id',
         component: CastIntroduceComponent
+      },
+      {
+        path: 'imgCrop',
+        component: ImgCropComponent
       }
     ]
   }

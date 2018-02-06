@@ -1,0 +1,13 @@
+<div class="">
+  <a href="https://github.com/jdcontra/contra-ngx-img-cropper">ng2-img-cropper</a>
+  <p>npm i ng2-img-cropper --save</p>
+</div>
+<div class="example">
+  <div>
+    <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper><br>
+    <img *ngIf="data.image" [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+  </div>
+  <button nz-button [nzType]="'primary'" (click)="getImgData()">
+    获取data数据
+  </button>
+</div>

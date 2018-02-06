@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import {HashLocationStrategy , LocationStrategy} from '@angular/common';
+import { HashLocationStrategy , LocationStrategy } from '@angular/common';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './routes';
@@ -11,6 +11,7 @@ import { Storage } from '../server/storage';
 import { Scroll } from '../server/scroll';
 import { Store } from '../server/store';
 import { Stars } from '../server/commonService';
+import { ImageCropperComponent } from 'ng2-img-cropper';
 
 import { MainComponent } from './common/main/main.component';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { MovieIntroduceComponent } from './page/movie-introduce/movie-introduce.
 import { CardListComponent } from './common/card-list/card-list.component';
 import { CastIntroduceComponent } from './page/cast-introduce/cast-introduce.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
+import { ImgCropComponent } from './page/img-crop/img-crop.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
     MovieIntroduceComponent,
     CardListComponent,
     CastIntroduceComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ImgCropComponent,
+    ImageCropperComponent
   ],
   imports: [
     BrowserModule,
