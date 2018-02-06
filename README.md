@@ -35,10 +35,16 @@ npm install node-sass --save-dev
 }
 
 ## 安装 ng-zorro
-
-npm install ng-zorro-antd --save，然后在app.module.ts里引入
+```
+npm install ng-zorro-antd --save
+```
+然后在app.module.ts里导入
+```
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-imports: [ NgZorroAntdModule.forRoot() ]
+@NgModule({
+  imports: [ NgZorroAntdModule.forRoot() ]
+})
+```
 
 ## 安装jquery
 
@@ -257,15 +263,15 @@ export class  {
 ```
 我们把A组件想成是列表，点击之后进入详情B,那么我们可以在点击的时候设置当前详情信息，在路由到B的时候就直接能获取到A的信息
 
-#路由的跳转的几种写法
+# 路由的跳转的几种写法
 
-#1. a标签上直接写路由地址
+# 1. a标签上直接写路由地址
 
 ```
 <a routerLink="{{'/main/movie/'+id}}"></a>
 <a [routerLink]="['/main/movie', id]"></a>
 ```
-#2. 函数式写法
+# 2. 函数式写法
 ```
 import { Router } from '@angular/router';
 export class C {
