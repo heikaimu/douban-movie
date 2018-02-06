@@ -4,6 +4,6 @@ import { Injectable } from '@angular/core';
 export class Stars {
   public type: string;
   constructor() {
-    this.type = '';
+    this.type = '1111';
   }
 }

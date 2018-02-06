@@ -75,6 +75,16 @@ $('body').addClass('');
 
 修改package.json里面的 "build": "ng build --base-href ./ --prod", base-href根据情况而定。
 
+## 渲染组件数据时出现某字段undefined
+```
+<movie-details [details]="details"></movie-details>
+```
+如果直接这样，特别是异步数据，大几率出现某字段undefined的情况，所以这个时候我们需要再加一个指令ngIf.
+```
+<movie-details *ngIf="details" [details]="details"></movie-details>
+```
+这样写就是在数据已经拿到之后再渲染，避免了数据还未拿到就开始渲染出现数据undefined的情况。
+
 # 组件之间通信
 
 ## 1. 父传子
@@ -190,5 +200,79 @@ export class B implements OnInit {
     }
 }
 ```
-
+如需要手动取消订阅，则使用代码
+```
+this.store.currentNav.unsubscribe();
+```
 ### 3.2 公用service实现组件之间传值
+
+创建一个公共service.ts
+```
+import { Injectable } from '@angular/core';
+interface detailsConfig {
+  name: string;
+  sex: string;
+  age: number;
+  likes: string[];
+}
+@Injectable()
+export class CommonService {
+  public details: detailsConfig;
+}
+```
+注入（一定要在单列下才能正常运行）我选择在app.module.ts里面注入
+
+A，B两个非父子组件通信，A是发射源，B是响应端
+
+A.ts
+```
+import {CommonService} from '../service.ts';
+
+export class A {
+  constructor(
+    private commonService: CommonService
+  ) {}
+  changeType(item) {
+    this.commonService.details = item;
+  }
+}
+```
+B.ts
+```
+import {CommonService} from '../service.ts';
+interface detailsConfig {
+  name: string;
+  sex: string;
+  age: number;
+  likes: string[];
+}
+export class  {
+  currentDetails: detailsConfig;
+  constructor(
+    private commonService: CommonService
+  ) {
+    this.currentDetails = this.commonService.details;
+  }
+}
+```
+我们把A组件想成是列表，点击之后进入详情B,那么我们可以在点击的时候设置当前详情信息，在路由到B的时候就直接能获取到A的信息
+
+#路由的跳转的几种写法
+
+#1. a标签上直接写路由地址
+
+```
+<a routerLink="{{'/main/movie/'+id}}"></a>
+<a [routerLink]="['/main/movie', id]"></a>
+```
+#2. 函数式写法
+```
+import { Router } from '@angular/router';
+export class C {
+  constructor(
+    private router: Router
+  ) {
+    this.router.navigate(['/main/movie', id]);
+  }
+}
+```

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../../../api/movie';
 import { Storage } from '../../../server/storage';
 import { Store } from '../../../server/store';
-import { Stars } from '../../../server/commonService';
 
 import {
   FormBuilder,
@@ -35,8 +34,7 @@ export class TableComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private storage: Storage,
     private router: Router,
-    private store: Store,
-    private stars: Stars
+    private store: Store
   ) { }
   ngOnInit() {
     // 初始的时候搜索为false，搜索内容为null
@@ -57,7 +55,6 @@ export class TableComponent implements OnInit, OnDestroy {
       }
       // 发布模式（和左侧导航通信）
       this.store.currentNav.emit(this._type);
-      this.stars.type = this._type;
       this.chargePage();
     });
   }
@@ -126,6 +123,10 @@ export class TableComponent implements OnInit, OnDestroy {
       start: this._pageSize * (this._current - 1),
       pageSize: this._pageSize
     };
+    if (params.keyword === null) {
+      this._loading = false;
+      return false;
+    }
     this.listData = await this.movie.searchMovie(params);
     this._loading = false;
     this._total = this.listData.total;
